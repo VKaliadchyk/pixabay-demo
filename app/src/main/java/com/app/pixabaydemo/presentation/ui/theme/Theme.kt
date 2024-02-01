@@ -1,4 +1,4 @@
-package com.app.pixabaydemo.ui.theme
+package com.app.pixabaydemo.presentation.ui.theme
 
 import android.app.Activity
 import android.os.Build

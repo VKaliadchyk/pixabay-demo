@@ -1,4 +1,4 @@
-package com.app.pixabaydemo.ui.theme
+package com.app.pixabaydemo.presentation.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle
