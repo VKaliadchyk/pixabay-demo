@@ -9,8 +9,7 @@ data class ImageData(
     val username: String,
     val likesCount: Int,
     val downloadsCount: Int,
-    val commentsCount: Int,
-    val query: String,
+    val commentsCount: Int
 ) {
     companion object {
         val defaultValue = ImageData(
@@ -22,8 +21,7 @@ data class ImageData(
             username = "",
             likesCount = 0,
             downloadsCount = 0,
-            commentsCount = 0,
-            query = ""
+            commentsCount = 0
         )
     }
 }

@@ -1,4 +1,6 @@
 <resources>
     <string name="app_name">PixabayDemoApp</string>
     <string name="gallery_search_bar_hint">Search for images</string>
+    <string name="dialog_image_details_title">View More Details?</string>
+    <string name="dialog_image_details_message">Would you like to see more details about this item?</string>
 </resources>
