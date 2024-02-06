@@ -17,13 +17,16 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.app.pixabaydemo.R
 import com.app.pixabaydemo.presentation.composable.AppCard
 import com.app.pixabaydemo.presentation.composable.AppImage
 import com.app.pixabaydemo.presentation.composable.GalleryScreenSearchBar
 import com.app.pixabaydemo.presentation.composable.TagPill
+import com.app.pixabaydemo.presentation.composable.ViewDetailsConfirmationDialog
 import com.app.pixabaydemo.presentation.ui.screen.gallery.model.ImageData
 import com.app.pixabaydemo.presentation.ui.theme.PixabayDemoAppTheme
 import com.app.pixabaydemo.presentation.util.defaultHorizontalPadding
@@ -38,17 +41,34 @@ import com.google.accompanist.flowlayout.FlowRow
 fun GalleryScreen(
     imageList: List<ImageData>,
     searchQueryValue: String,
+    isDetailsConfirmationDialogVisible: Boolean,
+    selectedImage: ImageData?,
     onSearchQueryChange: (String) -> Unit,
-    onListItemClick: (ImageData) -> Unit
+    onListItemClick: (ImageData) -> Unit,
+    onDetailsConfirmationDialogConfirmClick: (ImageData) -> Unit,
+    onDialogDismissClick: () -> Unit
 ) {
-
-    Column(modifier = Modifier.fillMaxSize()) {
-        GalleryScreenSearchBar(searchQuery = searchQueryValue, onQueryChange = onSearchQueryChange)
-        LazyVerticalGrid(columns = GridCells.Fixed(2)) {
-            items(items = imageList) { imageData ->
-                ImageListItem(imageData = imageData, onItemClick = onListItemClick)
+    Box(Modifier.fillMaxSize(), contentAlignment = Alignment.TopCenter) {
+        Column(modifier = Modifier.fillMaxSize()) {
+            GalleryScreenSearchBar(
+                searchQuery = searchQueryValue,
+                onQueryChange = onSearchQueryChange
+            )
+            LazyVerticalGrid(columns = GridCells.Fixed(2)) {
+                items(items = imageList) { imageData ->
+                    ImageListItem(imageData = imageData, onItemClick = onListItemClick)
+                }
             }
         }
+
+        ViewDetailsConfirmationDialog(
+            isVisible = isDetailsConfirmationDialogVisible && selectedImage != null,
+            title = stringResource(id = R.string.dialog_image_details_title),
+            message = stringResource(id = R.string.dialog_image_details_message),
+            imageData = selectedImage ?: ImageData.defaultValue,
+            onConfirmClick = onDetailsConfirmationDialogConfirmClick,
+            onDismissClick = onDialogDismissClick
+        )
     }
 }
 
@@ -124,8 +144,12 @@ fun GalleryScreenPreview() {
             GalleryScreen(
                 imageList = mockedImageDataList(),
                 searchQueryValue = "Flowers",
+                isDetailsConfirmationDialogVisible = false,
+                selectedImage = null,
                 onSearchQueryChange = { },
-                onListItemClick = { }
+                onListItemClick = { },
+                onDetailsConfirmationDialogConfirmClick = { },
+                onDialogDismissClick = { }
             )
         }
     }
