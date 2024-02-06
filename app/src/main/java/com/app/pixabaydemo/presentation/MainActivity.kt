@@ -22,17 +22,27 @@ class MainActivity : ComponentActivity() {
             val viewModel: GalleryViewModel = hiltViewModel()
             val imageList by viewModel.imageListState.collectAsState()
             val searchQueryValue by viewModel.searchQueryValueState.collectAsState()
+            val isDetailsConfirmationDialogVisible by viewModel.isDetailsConfirmationDialogVisibleState.collectAsState()
+            val selectedImage by viewModel.selectedImage.collectAsState()
 
             PixabayDemoAppTheme {
                 Surface {
                     GalleryScreen(
                         imageList = imageList,
                         searchQueryValue = searchQueryValue,
+                        isDetailsConfirmationDialogVisible = isDetailsConfirmationDialogVisible,
+                        selectedImage = selectedImage,
                         onSearchQueryChange = { newValue ->
                             viewModel.onSearchQueryChange(newValue)
                         },
                         onListItemClick = { imageData ->
                             viewModel.onListItemClick(imageData)
+                        },
+                        onDetailsConfirmationDialogConfirmClick = { imageData ->
+                            viewModel.onConfirmDetailsConfirmationDialog(imageData)
+                        },
+                        onDialogDismissClick = {
+                            viewModel.dismissDialogs()
                         }
                     )
                 }
