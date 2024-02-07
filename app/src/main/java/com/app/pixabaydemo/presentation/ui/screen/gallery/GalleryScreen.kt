@@ -98,7 +98,7 @@ fun ImageListItem(
                 contentAlignment = Alignment.Center
             ) {
                 AppImage(
-                    imageUrl = imageData.largeImageUrl,
+                    imageUrl = imageData.previewImageUrl,
                     contentDescription = null,
                     modifier = Modifier.roundedCornerShape(
                         topStart = 5.dp,

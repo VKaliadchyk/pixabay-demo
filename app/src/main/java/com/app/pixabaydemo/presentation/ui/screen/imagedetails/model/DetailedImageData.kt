@@ -2,9 +2,7 @@ package com.app.pixabaydemo.presentation.ui.screen.imagedetails.model
 
 data class DetailedImageData(
     val id: Int,
-    val previewUrl: String,
-    val largeImageUrl: String,
-    val webFormatUrl: String,
+    val imageUrl: String,
     val tags: List<String>,
     val username: String,
     val likesCount: Int,
@@ -14,9 +12,7 @@ data class DetailedImageData(
     companion object {
         val defaultValue = DetailedImageData(
             id = 0,
-            previewUrl = "",
-            largeImageUrl = "",
-            webFormatUrl = "",
+            imageUrl = "",
             tags = emptyList(),
             username = "",
             likesCount = 0,

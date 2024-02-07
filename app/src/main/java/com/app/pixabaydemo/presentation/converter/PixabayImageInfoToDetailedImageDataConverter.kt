@@ -12,9 +12,7 @@ class PixabayImageInfoToDetailedImageDataConverter @Inject constructor() :
     override fun convert(source: PixabayImageInfo): DetailedImageData {
         return DetailedImageData(
             id = source.id,
-            previewUrl = source.previewURL,
-            largeImageUrl = source.largeImageURL,
-            webFormatUrl = source.largeImageURL,
+            imageUrl = source.largeImageURL,
             tags = source.tags.split(TAGS_DELIMITER),
             username = source.user,
             likesCount = source.likes,

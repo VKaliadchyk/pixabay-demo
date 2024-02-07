@@ -58,7 +58,7 @@ fun ImageDetailsScreen(
                 modifier = Modifier.fillMaxSize()
             ) {
                 AppImage(
-                    imageUrl = detailedImageData.largeImageUrl,
+                    imageUrl = detailedImageData.imageUrl,
                     contentDescription = "Large image",
                     contentScale = ContentScale.Fit
                 )

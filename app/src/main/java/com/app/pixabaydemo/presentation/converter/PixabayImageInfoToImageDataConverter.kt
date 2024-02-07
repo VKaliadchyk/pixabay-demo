@@ -12,14 +12,9 @@ class PixabayImageInfoToImageDataConverter @Inject constructor() :
     override fun convert(source: PixabayImageInfo): ImageData {
         return ImageData(
             id = source.id,
-            previewUrl = source.previewURL,
-            largeImageUrl = source.largeImageURL,
-            webFormatUrl = source.largeImageURL,
+            previewImageUrl = source.largeImageURL,
             tags = source.tags.split(TAGS_DELIMITER),
-            username = source.user,
-            likesCount = source.likes,
-            downloadsCount = source.downloads,
-            commentsCount = source.comments
+            username = source.user
         )
     }
 
