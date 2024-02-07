@@ -7,8 +7,11 @@ import com.app.pixabaydemo.domain.entity.PixabayImageInfo
 import com.app.pixabaydemo.domain.entity.Resource
 import com.app.pixabaydemo.domain.usecase.GetPixabayImagesUseCase
 import com.app.pixabaydemo.presentation.converter.Converter
+import com.app.pixabaydemo.presentation.navigation.NavDestination
+import com.app.pixabaydemo.presentation.navigation.NavigationManager
 import com.app.pixabaydemo.presentation.ui.screen.gallery.model.GalleryScreenInitialValues
 import com.app.pixabaydemo.presentation.ui.screen.gallery.model.ImageData
+import com.google.gson.Gson
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -26,7 +29,9 @@ import javax.inject.Inject
 @HiltViewModel
 class GalleryViewModel @Inject constructor(
     private val getPixabayImagesUseCase: GetPixabayImagesUseCase,
+    private val navigationManager: NavigationManager,
     private val converter: Converter<PixabayImageInfo, ImageData>,
+    private val gson: Gson,
     initialValues: GalleryScreenInitialValues
 ) : ViewModel() {
 
@@ -55,12 +60,13 @@ class GalleryViewModel @Inject constructor(
     }
 
     fun dismissDialogs() {
-        _isDetailsConfirmationDialogVisibleState.update { false }
-        _selectedImage.update { null }
+        hideAllDialogs()
     }
 
     fun onConfirmDetailsConfirmationDialog(imageData: ImageData) {
-        TODO("Not yet implemented")
+        hideAllDialogs()
+        //TODO implement
+        navigationManager.navigate(NavDestination.ImageDetailScreen(""))
     }
 
     private suspend fun handleSearchRequest(searchQuery: String) {
@@ -86,6 +92,11 @@ class GalleryViewModel @Inject constructor(
 
     private fun handleFailedRequest(errorMessage: String) {
         Log.e(LOG_TAG, errorMessage)
+    }
+
+    private fun hideAllDialogs() {
+        _isDetailsConfirmationDialogVisibleState.update { false }
+        _selectedImage.update { null }
     }
 
     private fun PixabayImageInfo.toImageData(): ImageData {

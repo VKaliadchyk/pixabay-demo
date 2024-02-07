@@ -1,4 +1,4 @@
-package com.app.pixabaydemo.presentation.util
+package com.app.pixabaydemo.presentation.util.extension
 
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding

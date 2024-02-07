@@ -29,12 +29,12 @@ import com.app.pixabaydemo.presentation.composable.TagPill
 import com.app.pixabaydemo.presentation.composable.ViewDetailsConfirmationDialog
 import com.app.pixabaydemo.presentation.ui.screen.gallery.model.ImageData
 import com.app.pixabaydemo.presentation.ui.theme.PixabayDemoAppTheme
-import com.app.pixabaydemo.presentation.util.defaultHorizontalPadding
-import com.app.pixabaydemo.presentation.util.defaultPadding
-import com.app.pixabaydemo.presentation.util.defaultSpacerHeight
+import com.app.pixabaydemo.presentation.util.extension.defaultHorizontalPadding
+import com.app.pixabaydemo.presentation.util.extension.defaultPadding
+import com.app.pixabaydemo.presentation.util.extension.defaultSpacerHeight
 import com.app.pixabaydemo.presentation.util.mockedImageData
 import com.app.pixabaydemo.presentation.util.mockedImageDataList
-import com.app.pixabaydemo.presentation.util.roundedCornerShape
+import com.app.pixabaydemo.presentation.util.extension.roundedCornerShape
 import com.google.accompanist.flowlayout.FlowRow
 
 @Composable

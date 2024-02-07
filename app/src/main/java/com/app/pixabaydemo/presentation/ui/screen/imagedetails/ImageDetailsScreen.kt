@@ -29,9 +29,9 @@ import com.app.pixabaydemo.presentation.composable.LabeledText
 import com.app.pixabaydemo.presentation.composable.TagPill
 import com.app.pixabaydemo.presentation.ui.screen.imagedetails.model.DetailedImageData
 import com.app.pixabaydemo.presentation.ui.theme.PixabayDemoAppTheme
-import com.app.pixabaydemo.presentation.util.defaultPadding
-import com.app.pixabaydemo.presentation.util.defaultSpacerHeight
-import com.app.pixabaydemo.presentation.util.defaultSpacerWidth
+import com.app.pixabaydemo.presentation.util.extension.defaultPadding
+import com.app.pixabaydemo.presentation.util.extension.defaultSpacerHeight
+import com.app.pixabaydemo.presentation.util.extension.defaultSpacerWidth
 import com.app.pixabaydemo.presentation.util.mockedDetailedImageData
 import com.google.accompanist.flowlayout.FlowRow
 

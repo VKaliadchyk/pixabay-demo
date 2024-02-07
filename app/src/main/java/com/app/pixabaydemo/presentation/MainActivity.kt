@@ -5,46 +5,32 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.hilt.navigation.compose.hiltViewModel
-import com.app.pixabaydemo.presentation.ui.screen.gallery.GalleryScreen
-import com.app.pixabaydemo.presentation.ui.screen.gallery.GalleryViewModel
+import androidx.navigation.compose.rememberNavController
+import com.app.pixabaydemo.presentation.navigation.NavGraph
+import com.app.pixabaydemo.presentation.navigation.NavigationManager
 import com.app.pixabaydemo.presentation.ui.theme.PixabayDemoAppTheme
+import com.app.pixabaydemo.presentation.util.extension.navigate
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+
+    @Inject
+    lateinit var navigationManager: NavigationManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setContent {
-            val viewModel: GalleryViewModel = hiltViewModel()
-            val imageList by viewModel.imageListState.collectAsState()
-            val searchQueryValue by viewModel.searchQueryValueState.collectAsState()
-            val isDetailsConfirmationDialogVisible by viewModel.isDetailsConfirmationDialogVisibleState.collectAsState()
-            val selectedImage by viewModel.selectedImage.collectAsState()
-
             PixabayDemoAppTheme {
+                val navController = rememberNavController()
+                navigationManager.destination.collectAsState().value.also { destination ->
+                    navController.navigate(destination)
+                }
+
                 Surface {
-                    GalleryScreen(
-                        imageList = imageList,
-                        searchQueryValue = searchQueryValue,
-                        isDetailsConfirmationDialogVisible = isDetailsConfirmationDialogVisible,
-                        selectedImage = selectedImage,
-                        onSearchQueryChange = { newValue ->
-                            viewModel.onSearchQueryChange(newValue)
-                        },
-                        onListItemClick = { imageData ->
-                            viewModel.onListItemClick(imageData)
-                        },
-                        onDetailsConfirmationDialogConfirmClick = { imageData ->
-                            viewModel.onConfirmDetailsConfirmationDialog(imageData)
-                        },
-                        onDialogDismissClick = {
-                            viewModel.dismissDialogs()
-                        }
-                    )
+                    NavGraph(navController = navController)
                 }
             }
         }

@@ -1,27 +1,27 @@
 package com.app.pixabaydemo.di
 
-import com.app.pixabaydemo.domain.entity.PixabayImageInfo
-import com.app.pixabaydemo.presentation.converter.Converter
-import com.app.pixabaydemo.presentation.converter.PixabayImageInfoToDetailedImageDataConverter
-import com.app.pixabaydemo.presentation.converter.PixabayImageInfoToImageDataConverter
-import com.app.pixabaydemo.presentation.ui.screen.gallery.model.ImageData
-import com.app.pixabaydemo.presentation.ui.screen.imagedetails.model.DetailedImageData
-import dagger.Binds
+import com.app.pixabaydemo.presentation.navigation.NavigationManager
+import com.app.pixabaydemo.presentation.navigation.NavigationManagerImpl
+import com.google.gson.Gson
 import dagger.Module
+import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-abstract class PresentationModule {
+class PresentationModule {
 
-    @Binds
-    abstract fun providePixabayImageInfoToImageDataConverter(
-        converter: PixabayImageInfoToImageDataConverter
-    ): Converter<PixabayImageInfo, ImageData>
+    @Singleton
+    @Provides
+    fun provideNavigationManager(): NavigationManager {
+        return NavigationManagerImpl()
+    }
 
-    @Binds
-    abstract fun providePixabayImageInfoToDetailedImageDataConverter(
-        converter: PixabayImageInfoToDetailedImageDataConverter
-    ): Converter<PixabayImageInfo, DetailedImageData>
+    @Singleton
+    @Provides
+    fun provideGson(): Gson {
+        return Gson()
+    }
 }

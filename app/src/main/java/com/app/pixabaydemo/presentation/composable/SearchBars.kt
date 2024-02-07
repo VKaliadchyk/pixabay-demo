@@ -27,9 +27,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.app.pixabaydemo.R
 import com.app.pixabaydemo.presentation.ui.theme.PixabayDemoAppTheme
-import com.app.pixabaydemo.presentation.util.defaultPadding
-import com.app.pixabaydemo.presentation.util.defaultScreenPadding
-import com.app.pixabaydemo.presentation.util.defaultSpacerWidth
+import com.app.pixabaydemo.presentation.util.extension.defaultPadding
+import com.app.pixabaydemo.presentation.util.extension.defaultScreenPadding
+import com.app.pixabaydemo.presentation.util.extension.defaultSpacerWidth
 
 @Composable
 fun GalleryScreenSearchBar(

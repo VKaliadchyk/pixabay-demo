@@ -20,7 +20,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.app.pixabaydemo.presentation.util.defaultSpacerWidth
+import com.app.pixabaydemo.presentation.util.extension.defaultSpacerWidth
 
 @Composable
 fun TagPill(
