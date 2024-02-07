@@ -1,6 +1,6 @@
 package com.app.pixabaydemo.domain.entity
 
-data class PixabayImageInfo(
+data class ImageData(
     val id: Int,
     val pageURL: String,
     val type: String,

@@ -31,7 +31,7 @@ import com.app.pixabaydemo.presentation.composable.AppImage
 import com.app.pixabaydemo.presentation.composable.GalleryScreenSearchBar
 import com.app.pixabaydemo.presentation.composable.TagPill
 import com.app.pixabaydemo.presentation.composable.ViewDetailsConfirmationDialog
-import com.app.pixabaydemo.presentation.ui.screen.gallery.model.ImageData
+import com.app.pixabaydemo.presentation.ui.screen.gallery.model.ImageListItemData
 import com.app.pixabaydemo.presentation.ui.theme.PixabayDemoAppTheme
 import com.app.pixabaydemo.presentation.util.extension.defaultHorizontalPadding
 import com.app.pixabaydemo.presentation.util.extension.defaultPadding
@@ -43,14 +43,14 @@ import com.google.accompanist.flowlayout.FlowRow
 
 @Composable
 fun GalleryScreen(
-    imageList: List<ImageData>,
+    imageList: List<ImageListItemData>,
     searchQueryValue: String,
     isDetailsConfirmationDialogVisible: Boolean,
-    selectedImage: ImageData?,
+    selectedImage: ImageListItemData?,
     errorMessage: String?,
     onSearchQueryChange: (String) -> Unit,
-    onListItemClick: (ImageData) -> Unit,
-    onDetailsConfirmationDialogConfirmClick: (ImageData) -> Unit,
+    onListItemClick: (ImageListItemData) -> Unit,
+    onDetailsConfirmationDialogConfirmClick: (ImageListItemData) -> Unit,
     onDialogDismissClick: () -> Unit
 ) {
     Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
@@ -79,7 +79,7 @@ fun GalleryScreen(
             )
             LazyVerticalGrid(columns = GridCells.Fixed(2)) {
                 items(items = imageList) { imageData ->
-                    ImageListItem(imageData = imageData, onItemClick = onListItemClick)
+                    ImageListItem(imageListItemData = imageData, onItemClick = onListItemClick)
                 }
             }
         }
@@ -88,7 +88,7 @@ fun GalleryScreen(
             isVisible = isDetailsConfirmationDialogVisible && selectedImage != null,
             title = stringResource(id = R.string.dialog_image_details_title),
             message = stringResource(id = R.string.dialog_image_details_message),
-            imageData = selectedImage ?: ImageData.defaultValue,
+            imageListItemData = selectedImage ?: ImageListItemData.defaultValue,
             onConfirmClick = onDetailsConfirmationDialogConfirmClick,
             onDismissClick = onDialogDismissClick
         )
@@ -98,8 +98,8 @@ fun GalleryScreen(
 
 @Composable
 fun ImageListItem(
-    imageData: ImageData,
-    onItemClick: (ImageData) -> Unit
+    imageListItemData: ImageListItemData,
+    onItemClick: (ImageListItemData) -> Unit
 ) {
     AppCard(
         modifier = Modifier
@@ -107,7 +107,7 @@ fun ImageListItem(
             .width(200.dp)
             .height(270.dp)
             .clickable {
-                onItemClick(imageData)
+                onItemClick(imageListItemData)
             }
     ) {
         Column(
@@ -121,7 +121,7 @@ fun ImageListItem(
                 contentAlignment = Alignment.Center
             ) {
                 AppImage(
-                    imageUrl = imageData.previewImageUrl,
+                    imageUrl = imageListItemData.previewImageUrl,
                     contentDescription = null,
                     modifier = Modifier.roundedCornerShape(
                         topStart = 5.dp,
@@ -136,7 +136,7 @@ fun ImageListItem(
             ) {
                 Spacer(modifier = Modifier.defaultSpacerHeight())
                 Text(
-                    text = imageData.username,
+                    text = imageListItemData.username,
                     style = MaterialTheme.typography.bodyMedium,
                     fontWeight = FontWeight.Bold,
                     color = MaterialTheme.colorScheme.primary
@@ -147,7 +147,7 @@ fun ImageListItem(
                     crossAxisSpacing = 10.dp,
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                    imageData.tags.forEach { tag ->
+                    imageListItemData.tags.forEach { tag ->
                         TagPill(tag = tag)
                     }
                 }
@@ -185,7 +185,7 @@ fun ImageListItemPreview() {
     PixabayDemoAppTheme {
         Surface {
             ImageListItem(
-                imageData = mockedImageData(),
+                imageListItemData = mockedImageData(),
                 onItemClick = { }
             )
         }

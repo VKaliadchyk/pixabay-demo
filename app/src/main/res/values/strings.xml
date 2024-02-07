@@ -4,4 +4,6 @@
     <string name="dialog_image_details_title">View More Details?</string>
     <string name="dialog_image_details_message">Would you like to see more details about this item?</string>
     <string name="title_uploaded_by">Uploaded by</string>
+    <string name="title_ok">Ok</string>
+    <string name="title_cancel">Cancel</string>
 </resources>

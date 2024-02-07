@@ -12,7 +12,7 @@ sealed class NavDestination(val route: String) {
         val routeWithArgument = "$route/$image"
         companion object {
             const val ARGUMENT_KEY = "image"
-            const val destinationRoute = "$IMAGE_DETAIL_SCREEN_ROUTE/{$ARGUMENT_KEY}"
+            const val argumentRoute = "$IMAGE_DETAIL_SCREEN_ROUTE/{$ARGUMENT_KEY}"
         }
     }
 

@@ -1,15 +1,16 @@
 package com.app.pixabaydemo.presentation.converter
 
-import com.app.pixabaydemo.domain.entity.PixabayImageInfo
+import com.app.pixabaydemo.domain.converter.Converter
+import com.app.pixabaydemo.domain.entity.ImageData
 import com.app.pixabaydemo.presentation.ui.screen.imagedetails.model.DetailedImageData
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class PixabayImageInfoToDetailedImageDataConverter @Inject constructor() :
-    Converter<PixabayImageInfo, DetailedImageData> {
+class ImageToDetailedImageDataConverter @Inject constructor() :
+    Converter<ImageData, DetailedImageData> {
 
-    override fun convert(source: PixabayImageInfo): DetailedImageData {
+    override fun convert(source: ImageData): DetailedImageData {
         return DetailedImageData(
             id = source.id,
             imageUrl = source.largeImageURL,

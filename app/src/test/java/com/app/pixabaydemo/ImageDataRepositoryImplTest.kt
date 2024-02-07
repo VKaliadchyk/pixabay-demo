@@ -5,7 +5,7 @@ import com.app.pixabaydemo.data.remote.api.PixabayApi
 import com.app.pixabaydemo.data.remote.credentials.PixabayApiKeyProvider
 import com.app.pixabaydemo.data.remote.model.Hit
 import com.app.pixabaydemo.data.remote.model.PixabayApiResponse
-import com.app.pixabaydemo.data.repository.PixabayRepositoryImpl
+import com.app.pixabaydemo.data.repository.ImageRepositoryImpl
 import com.app.pixabaydemo.domain.entity.Resource
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
@@ -23,7 +23,7 @@ import org.junit.Test
 import retrofit2.Response
 import java.util.concurrent.TimeoutException
 
-class PixabayRepositoryImplTest {
+class ImageDataRepositoryImplTest {
 
     companion object {
         private const val FAKE_QUERY = "FAKE_QUERY"
@@ -63,13 +63,13 @@ class PixabayRepositoryImplTest {
     @MockK
     lateinit var pixabayApiKeyProvider: PixabayApiKeyProvider
 
-    private lateinit var repository: PixabayRepositoryImpl
+    private lateinit var repository: ImageRepositoryImpl
 
     @Before
     fun setup() {
         MockKAnnotations.init(this, relaxUnitFun = true)
 
-        repository = PixabayRepositoryImpl(
+        repository = ImageRepositoryImpl(
             pixabayApi,
             pixabayApiKeyProvider
         )

@@ -46,7 +46,7 @@ fun NavGraph(navController: NavHostController) {
             )
         }
         composable(
-            route = NavDestination.ImageDetailScreen.destinationRoute,
+            route = NavDestination.ImageDetailScreen.argumentRoute,
             arguments = listOf(
                 navArgument(NavDestination.ImageDetailScreen.ARGUMENT_KEY) {
                     type = NavType.StringType

@@ -1,7 +1,7 @@
 package com.app.pixabaydemo.di
 
-import com.app.pixabaydemo.data.repository.PixabayRepositoryImpl
-import com.app.pixabaydemo.domain.repository.PixabayRepository
+import com.app.pixabaydemo.data.repository.ImageRepositoryImpl
+import com.app.pixabaydemo.domain.repository.ImageRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -14,5 +14,5 @@ abstract class RepositoryModule {
 
     @Singleton
     @Binds
-    abstract fun providePixabayRepository(repository: PixabayRepositoryImpl): PixabayRepository
+    abstract fun provideImageRepository(repository: ImageRepositoryImpl): ImageRepository
 }

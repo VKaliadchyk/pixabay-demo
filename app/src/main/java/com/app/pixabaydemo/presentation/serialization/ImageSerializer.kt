@@ -1,6 +1,6 @@
 package com.app.pixabaydemo.presentation.serialization
 
-import com.app.pixabaydemo.domain.entity.PixabayImageInfo
+import com.app.pixabaydemo.domain.entity.ImageData
 import com.google.gson.JsonElement
 import com.google.gson.JsonObject
 import com.google.gson.JsonSerializationContext
@@ -9,9 +9,9 @@ import java.lang.reflect.Type
 import java.net.URLEncoder
 import java.nio.charset.StandardCharsets
 
-class PixabayImageInfoSerializer : JsonSerializer<PixabayImageInfo> {
+class ImageSerializer : JsonSerializer<ImageData> {
     override fun serialize(
-        src: PixabayImageInfo,
+        src: ImageData,
         typeOfSrc: Type,
         context: JsonSerializationContext
     ): JsonElement {

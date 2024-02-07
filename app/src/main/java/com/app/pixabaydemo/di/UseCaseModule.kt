@@ -1,8 +1,8 @@
 package com.app.pixabaydemo.di
 
-import com.app.pixabaydemo.domain.repository.PixabayRepository
-import com.app.pixabaydemo.domain.usecase.GetPixabayImagesUseCase
-import com.app.pixabaydemo.domain.usecase.impl.GetPixabayImagesUseCaseImpl
+import com.app.pixabaydemo.domain.repository.ImageRepository
+import com.app.pixabaydemo.domain.usecase.GetImageUseCase
+import com.app.pixabaydemo.domain.usecase.impl.GetImageUseCaseImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -15,7 +15,7 @@ class UseCaseModule {
 
     @Singleton
     @Provides
-    fun provideGetPixabayImagesUseCase(pixabayRepository: PixabayRepository): GetPixabayImagesUseCase {
-        return GetPixabayImagesUseCaseImpl(pixabayRepository)
+    fun provideGetImageUseCase(imageRepository: ImageRepository): GetImageUseCase {
+        return GetImageUseCaseImpl(imageRepository)
     }
 }

@@ -1,4 +1,4 @@
-package com.app.pixabaydemo.presentation.converter
+package com.app.pixabaydemo.domain.converter
 
 interface Converter<S, R> {
 

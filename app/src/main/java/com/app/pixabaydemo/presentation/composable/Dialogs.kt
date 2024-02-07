@@ -20,8 +20,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.app.pixabaydemo.presentation.ui.screen.gallery.model.ImageData
+import com.app.pixabaydemo.R
+import com.app.pixabaydemo.presentation.ui.screen.gallery.model.ImageListItemData
 
 
 @Composable
@@ -30,16 +32,16 @@ fun ViewDetailsConfirmationDialog(
     isVisible: Boolean,
     title: String,
     message: String,
-    imageData: ImageData,
-    onConfirmClick: (ImageData) -> Unit,
+    imageListItemData: ImageListItemData,
+    onConfirmClick: (ImageListItemData) -> Unit,
     onDismissClick: () -> Unit,
 ) {
     BaseDialog(
         modifier = modifier,
         title = title,
         text = message,
-        confirmButton = { StandardButton(text = "Ok", onClick = { onConfirmClick(imageData) }) },
-        dismissButton = { StandardButton(text = "Cancel", onClick = onDismissClick) },
+        confirmButton = { StandardButton(text = stringResource(id = R.string.title_ok), onClick = { onConfirmClick(imageListItemData) }) },
+        dismissButton = { StandardButton(text = stringResource(id = R.string.title_cancel), onClick = onDismissClick) },
         isVisible = isVisible
     )
 }

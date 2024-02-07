@@ -3,14 +3,15 @@ package com.app.pixabaydemo.presentation.ui.screen.gallery
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.app.pixabaydemo.domain.entity.PixabayImageInfo
+import com.app.pixabaydemo.domain.converter.Converter
+import com.app.pixabaydemo.domain.entity.ImageData
 import com.app.pixabaydemo.domain.entity.Resource
-import com.app.pixabaydemo.domain.usecase.GetPixabayImagesUseCase
-import com.app.pixabaydemo.presentation.converter.Converter
+import com.app.pixabaydemo.domain.entity.SearchParameters
+import com.app.pixabaydemo.domain.usecase.GetImageUseCase
 import com.app.pixabaydemo.presentation.navigation.NavDestination
 import com.app.pixabaydemo.presentation.navigation.NavigationManager
 import com.app.pixabaydemo.presentation.ui.screen.gallery.model.GalleryScreenInitialValues
-import com.app.pixabaydemo.presentation.ui.screen.gallery.model.ImageData
+import com.app.pixabaydemo.presentation.ui.screen.gallery.model.ImageListItemData
 import com.google.gson.Gson
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -28,21 +29,21 @@ import javax.inject.Inject
 @OptIn(ExperimentalCoroutinesApi::class, FlowPreview::class)
 @HiltViewModel
 class GalleryViewModel @Inject constructor(
-    private val getPixabayImagesUseCase: GetPixabayImagesUseCase,
+    private val getImageUseCase: GetImageUseCase,
     private val navigationManager: NavigationManager,
-    private val converter: Converter<PixabayImageInfo, ImageData>,
+    private val converter: Converter<ImageData, ImageListItemData>,
     private val gson: Gson,
     initialValues: GalleryScreenInitialValues
 ) : ViewModel() {
 
     private val LOG_TAG = this.javaClass.name
 
-    private val pixabayImageInfoMap = mutableMapOf<Int, PixabayImageInfo>()
+    private val imageDataMap = mutableMapOf<Int, ImageData>()
 
     private val _errorMessageState: MutableStateFlow<String?> = MutableStateFlow(initialValues.errorMessage)
     val errorMessageState = _errorMessageState.asStateFlow()
 
-    private val _selectedImageState: MutableStateFlow<ImageData?> = MutableStateFlow(initialValues.selectedImage)
+    private val _selectedImageState: MutableStateFlow<ImageListItemData?> = MutableStateFlow(initialValues.selectedImage)
     val selectedImageState = _selectedImageState.asStateFlow()
 
     private val _isDetailsConfirmationDialogVisibleState = MutableStateFlow(initialValues.isDetailsConfirmationDialogVisible)
@@ -55,9 +56,9 @@ class GalleryViewModel @Inject constructor(
     val searchQueryValueState = _searchQueryValueState.asStateFlow()
 
 
-    fun onListItemClick(imageData: ImageData) {
+    fun onListItemClick(imageListItemData: ImageListItemData) {
         _isDetailsConfirmationDialogVisibleState.update { true }
-        _selectedImageState.update { imageData }
+        _selectedImageState.update { imageListItemData }
     }
 
     fun onSearchQueryChange(query: String) {
@@ -68,13 +69,13 @@ class GalleryViewModel @Inject constructor(
         hideAllDialogs()
     }
 
-    fun onConfirmDetailsConfirmationDialog(imageData: ImageData) {
+    fun onConfirmDetailsConfirmationDialog(imageListItemData: ImageListItemData) {
         hideAllDialogs()
 
         try {
-            val pixabayImageInfo = pixabayImageInfoMap[imageData.id]!!
-            val json = gson.toJson(pixabayImageInfo)
-            navigationManager.navigate(NavDestination.ImageDetailScreen(json))
+            val imageData = imageDataMap[imageListItemData.id]!!
+            val imageDataJson = gson.toJson(imageData)
+            navigationManager.navigate(NavDestination.ImageDetailScreen(imageDataJson))
         } catch (npe: NullPointerException) {
             Log.e(LOG_TAG, npe.message, npe)
             //TODO show error dialog to the user as well
@@ -82,7 +83,7 @@ class GalleryViewModel @Inject constructor(
     }
 
     private suspend fun handleSearchRequest(searchQuery: String) {
-        val resource = getPixabayImagesUseCase.execute(searchQuery)
+        val resource = getImageUseCase.execute(SearchParameters(searchQuery))
 
         when (resource) {
             is Resource.Success -> {
@@ -95,20 +96,20 @@ class GalleryViewModel @Inject constructor(
         }
     }
 
-    private fun handleSuccessfulRequest(pixabayImageInfoList: List<PixabayImageInfo>) {
-        updatePixabayImageInfoMap(pixabayImageInfoList)
+    private fun handleSuccessfulRequest(imageDataList: List<ImageData>) {
+        updateImageMap(imageDataList)
 
-        val imageDataList = pixabayImageInfoList
-            .map { pixabayImageInfo -> pixabayImageInfo.toImageData() }
+        val imageListItemDataDataList = imageDataList
+            .map { imageData -> imageData.toImageListItemData() }
 
         _errorMessageState.update { null }
-        _imageListState.update { imageDataList }
+        _imageListState.update { imageListItemDataDataList }
     }
 
-    private fun updatePixabayImageInfoMap(pixabayImageInfoList: List<PixabayImageInfo>) {
-        pixabayImageInfoMap.clear()
-        pixabayImageInfoMap.putAll(
-            pixabayImageInfoList.associateBy { pixabayImageInfo -> pixabayImageInfo.id }
+    private fun updateImageMap(imageDataList: List<ImageData>) {
+        imageDataMap.clear()
+        imageDataMap.putAll(
+            imageDataList.associateBy { imageData -> imageData.id }
         )
     }
 
@@ -122,7 +123,7 @@ class GalleryViewModel @Inject constructor(
         _selectedImageState.update { null }
     }
 
-    private fun PixabayImageInfo.toImageData(): ImageData {
+    private fun ImageData.toImageListItemData(): ImageListItemData {
         return converter.convert(this)
     }
 
