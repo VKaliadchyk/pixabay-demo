@@ -37,6 +37,8 @@ class GalleryViewModel @Inject constructor(
 
     private val LOG_TAG = this.javaClass.name
 
+    private val pixabayImageInfoMap = mutableMapOf<Int, PixabayImageInfo>()
+
     private val _selectedImage: MutableStateFlow<ImageData?> = MutableStateFlow(initialValues.selectedImage)
     val selectedImage = _selectedImage.asStateFlow()
 
@@ -65,8 +67,15 @@ class GalleryViewModel @Inject constructor(
 
     fun onConfirmDetailsConfirmationDialog(imageData: ImageData) {
         hideAllDialogs()
-        //TODO implement
-        navigationManager.navigate(NavDestination.ImageDetailScreen(""))
+
+        try {
+            val pixabayImageInfo = pixabayImageInfoMap[imageData.id]!!
+            val json = gson.toJson(pixabayImageInfo)
+            navigationManager.navigate(NavDestination.ImageDetailScreen(json))
+        } catch (npe: NullPointerException) {
+            Log.e(LOG_TAG, npe.message, npe)
+            //TODO show message to the user as well
+        }
     }
 
     private suspend fun handleSearchRequest(searchQuery: String) {
@@ -84,10 +93,19 @@ class GalleryViewModel @Inject constructor(
     }
 
     private fun handleSuccessfulRequest(pixabayImageInfoList: List<PixabayImageInfo>) {
+        updatePixabayImageInfoMap(pixabayImageInfoList)
+
         val imageDataList = pixabayImageInfoList
             .map { pixabayImageInfo -> pixabayImageInfo.toImageData() }
 
         _imageListState.update { imageDataList }
+    }
+
+    private fun updatePixabayImageInfoMap(pixabayImageInfoList: List<PixabayImageInfo>) {
+        pixabayImageInfoMap.clear()
+        pixabayImageInfoMap.putAll(
+            pixabayImageInfoList.associateBy { pixabayImageInfo -> pixabayImageInfo.id }
+        )
     }
 
     private fun handleFailedRequest(errorMessage: String) {

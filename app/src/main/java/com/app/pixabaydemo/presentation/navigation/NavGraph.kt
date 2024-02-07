@@ -13,7 +13,6 @@ import com.app.pixabaydemo.presentation.ui.screen.gallery.GalleryScreen
 import com.app.pixabaydemo.presentation.ui.screen.gallery.GalleryViewModel
 import com.app.pixabaydemo.presentation.ui.screen.imagedetails.ImageDetailsScreen
 import com.app.pixabaydemo.presentation.ui.screen.imagedetails.ImageDetailsViewModel
-import com.app.pixabaydemo.presentation.ui.screen.imagedetails.model.DetailedImageData
 
 @Composable
 fun NavGraph(navController: NavHostController) {
@@ -53,7 +52,9 @@ fun NavGraph(navController: NavHostController) {
             )
         ) {
             val viewModel: ImageDetailsViewModel = hiltViewModel()
-            ImageDetailsScreen(detailedImageData = DetailedImageData.defaultValue)
+            val detailedImageData by viewModel.detailedImageDataState.collectAsState()
+
+            ImageDetailsScreen(detailedImageData = detailedImageData)
         }
     }
 }
