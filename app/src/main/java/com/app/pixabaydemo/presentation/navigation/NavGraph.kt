@@ -22,13 +22,15 @@ fun NavGraph(navController: NavHostController) {
             val imageList by viewModel.imageListState.collectAsState()
             val searchQueryValue by viewModel.searchQueryValueState.collectAsState()
             val isDetailsConfirmationDialogVisible by viewModel.isDetailsConfirmationDialogVisibleState.collectAsState()
-            val selectedImage by viewModel.selectedImage.collectAsState()
+            val selectedImage by viewModel.selectedImageState.collectAsState()
+            val errorMessage by viewModel.errorMessageState.collectAsState()
 
             GalleryScreen(
                 imageList = imageList,
                 searchQueryValue = searchQueryValue,
                 isDetailsConfirmationDialogVisible = isDetailsConfirmationDialogVisible,
                 selectedImage = selectedImage,
+                errorMessage = errorMessage,
                 onSearchQueryChange = { newValue ->
                     viewModel.onSearchQueryChange(newValue)
                 },

@@ -4,5 +4,6 @@ data class GalleryScreenInitialValues(
     val searchBarValue: String,
     val imageList: List<ImageData>,
     val selectedImage: ImageData?,
+    val errorMessage: String?,
     val isDetailsConfirmationDialogVisible: Boolean
 )

@@ -18,6 +18,7 @@ class InitialValuesModule {
             searchBarValue = "Fruits",
             imageList = emptyList(),
             selectedImage = null,
+            errorMessage = null,
             isDetailsConfirmationDialogVisible = false
         )
     }

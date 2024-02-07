@@ -1,6 +1,7 @@
 package com.app.pixabaydemo.presentation.ui.screen.gallery
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -11,12 +12,15 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -43,12 +47,31 @@ fun GalleryScreen(
     searchQueryValue: String,
     isDetailsConfirmationDialogVisible: Boolean,
     selectedImage: ImageData?,
+    errorMessage: String?,
     onSearchQueryChange: (String) -> Unit,
     onListItemClick: (ImageData) -> Unit,
     onDetailsConfirmationDialogConfirmClick: (ImageData) -> Unit,
     onDialogDismissClick: () -> Unit
 ) {
-    Box(Modifier.fillMaxSize(), contentAlignment = Alignment.TopCenter) {
+    Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+        if (errorMessage != null) {
+            Column(
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier.fillMaxSize()
+            ) {
+                Icon(
+                    painter = painterResource(id = android.R.drawable.ic_dialog_alert),
+                    contentDescription = "Error"
+                )
+                Spacer(modifier = Modifier.defaultSpacerHeight())
+                Text(
+                    text = errorMessage,
+                    color = Color.Gray
+                )
+            }
+        }
+
         Column(modifier = Modifier.fillMaxSize()) {
             GalleryScreenSearchBar(
                 searchQuery = searchQueryValue,
@@ -146,6 +169,7 @@ fun GalleryScreenPreview() {
                 searchQueryValue = "Flowers",
                 isDetailsConfirmationDialogVisible = false,
                 selectedImage = null,
+                errorMessage = null,
                 onSearchQueryChange = { },
                 onListItemClick = { },
                 onDetailsConfirmationDialogConfirmClick = { },

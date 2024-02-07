@@ -39,8 +39,11 @@ class GalleryViewModel @Inject constructor(
 
     private val pixabayImageInfoMap = mutableMapOf<Int, PixabayImageInfo>()
 
-    private val _selectedImage: MutableStateFlow<ImageData?> = MutableStateFlow(initialValues.selectedImage)
-    val selectedImage = _selectedImage.asStateFlow()
+    private val _errorMessageState: MutableStateFlow<String?> = MutableStateFlow(initialValues.errorMessage)
+    val errorMessageState = _errorMessageState.asStateFlow()
+
+    private val _selectedImageState: MutableStateFlow<ImageData?> = MutableStateFlow(initialValues.selectedImage)
+    val selectedImageState = _selectedImageState.asStateFlow()
 
     private val _isDetailsConfirmationDialogVisibleState = MutableStateFlow(initialValues.isDetailsConfirmationDialogVisible)
     val isDetailsConfirmationDialogVisibleState = _isDetailsConfirmationDialogVisibleState.asStateFlow()
@@ -54,7 +57,7 @@ class GalleryViewModel @Inject constructor(
 
     fun onListItemClick(imageData: ImageData) {
         _isDetailsConfirmationDialogVisibleState.update { true }
-        _selectedImage.update { imageData }
+        _selectedImageState.update { imageData }
     }
 
     fun onSearchQueryChange(query: String) {
@@ -74,7 +77,7 @@ class GalleryViewModel @Inject constructor(
             navigationManager.navigate(NavDestination.ImageDetailScreen(json))
         } catch (npe: NullPointerException) {
             Log.e(LOG_TAG, npe.message, npe)
-            //TODO show message to the user as well
+            //TODO show error dialog to the user as well
         }
     }
 
@@ -98,6 +101,7 @@ class GalleryViewModel @Inject constructor(
         val imageDataList = pixabayImageInfoList
             .map { pixabayImageInfo -> pixabayImageInfo.toImageData() }
 
+        _errorMessageState.update { null }
         _imageListState.update { imageDataList }
     }
 
@@ -109,12 +113,13 @@ class GalleryViewModel @Inject constructor(
     }
 
     private fun handleFailedRequest(errorMessage: String) {
+        _errorMessageState.update { errorMessage }
         Log.e(LOG_TAG, errorMessage)
     }
 
     private fun hideAllDialogs() {
         _isDetailsConfirmationDialogVisibleState.update { false }
-        _selectedImage.update { null }
+        _selectedImageState.update { null }
     }
 
     private fun PixabayImageInfo.toImageData(): ImageData {
