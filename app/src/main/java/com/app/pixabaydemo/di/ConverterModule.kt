@@ -1,11 +1,11 @@
 package com.app.pixabaydemo.di
 
-import com.app.pixabaydemo.data.converter.HitToImageConverter
+import com.app.pixabaydemo.data.converter.HitToImageDataConverter
 import com.app.pixabaydemo.data.remote.model.Hit
 import com.app.pixabaydemo.domain.converter.Converter
 import com.app.pixabaydemo.domain.entity.ImageData
-import com.app.pixabaydemo.presentation.converter.ImageToDetailedImageDataConverter
-import com.app.pixabaydemo.presentation.converter.ImageToImageListItemDataConverter
+import com.app.pixabaydemo.presentation.converter.ImageDataToDetailedImageDataConverter
+import com.app.pixabaydemo.presentation.converter.ImageDataToImageListItemDataConverter
 import com.app.pixabaydemo.presentation.ui.screen.gallery.model.ImageListItemData
 import com.app.pixabaydemo.presentation.ui.screen.imagedetails.model.DetailedImageData
 import dagger.Binds
@@ -20,19 +20,19 @@ abstract class ConverterModule {
 
     @Singleton
     @Binds
-    abstract fun provideImageToImageListItemDataConverter(
-        converter: ImageToImageListItemDataConverter
+    abstract fun provideImageDataToImageListItemDataConverter(
+        converter: ImageDataToImageListItemDataConverter
     ): Converter<ImageData, ImageListItemData>
 
     @Singleton
     @Binds
-    abstract fun provideImageToDetailedImageDataConverter(
-        converter: ImageToDetailedImageDataConverter
+    abstract fun provideImageDataToDetailedImageDataConverter(
+        converter: ImageDataToDetailedImageDataConverter
     ): Converter<ImageData, DetailedImageData>
 
     @Singleton
     @Binds
-    abstract fun provideHitToImageConverter(
-        converter: HitToImageConverter
+    abstract fun provideHitToImageDataConverter(
+        converter: HitToImageDataConverter
     ): Converter<Hit, ImageData>
 }

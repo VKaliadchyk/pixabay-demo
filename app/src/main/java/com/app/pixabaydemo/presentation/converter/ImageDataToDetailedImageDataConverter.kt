@@ -7,7 +7,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class ImageToDetailedImageDataConverter @Inject constructor() :
+class ImageDataToDetailedImageDataConverter @Inject constructor() :
     Converter<ImageData, DetailedImageData> {
 
     override fun convert(source: ImageData): DetailedImageData {
