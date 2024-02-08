@@ -26,7 +26,7 @@ class LocalDataCache<K, V>(private val cacheLifetime: Long = DEFAULT_CACHE_LIFET
     }
 
     override fun contains(key: K): Boolean {
-        return cache.containsKey(key)
+        return !isExpired(key)
     }
 
     override fun clearCache() {
