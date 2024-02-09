@@ -12,6 +12,7 @@ Jetpack Compose, and adheres to Clean Architecture principles.
 # Potential Improvements:
 - Implement pagination for smoother browsing
 - Enhance test coverage for robustness
+- Enhance the NavigationManager logic to effectively integrate with the NavHostController
 
 # Comments:
 - In the absence of specific caching requirements, I introduced a flexible interface with an
